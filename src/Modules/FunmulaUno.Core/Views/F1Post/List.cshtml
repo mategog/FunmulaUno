@@ -1,0 +1,19 @@
+@using OrchardCore.ContentManagement
+@model FunmulaUno.Post.ViewModels.F1PostListViewModel
+
+@foreach (var post in Model.F1Posts)
+{
+    var f1Post = post.As<F1PostPart>();
+    var img = f1Post.Image.Paths.FirstOrDefault();
+
+    <div class="card f1post-card">
+        <div class="card-body">
+            <h5 class="card-title" style="color:blue;">@f1Post.Name.Text</h5>
+            <p class="card-text" style="color:blue;">@f1Post.Body.Text</p>
+        </div>
+        @if (img != null)
+        {
+            <img asset-src="@img" class="card-img-top f1post-image" alt="@f1Post.Name.Text"/>
+        }
+    </div>
+}
