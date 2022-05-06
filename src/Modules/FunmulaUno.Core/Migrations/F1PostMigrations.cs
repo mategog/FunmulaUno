@@ -5,6 +5,8 @@ using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Data.Migration;
 using OrchardCore.Media.Fields;
+using OrchardCore.Taxonomies.Fields;
+using OrchardCore.Taxonomies.Settings;
 
 namespace FunmulaUno.Post.Migrations
 {
@@ -38,6 +40,13 @@ namespace FunmulaUno.Post.Migrations
                     .WithDisplayName("Image")
                     .WithEditor("Attached")
                 )
+                .WithField(nameof(F1PostPart.Category), field => field
+                    .OfType(nameof(TaxonomyField))
+                    .WithDisplayName("Category")
+                    .WithSettings(new TaxonomyFieldSettings() { TaxonomyContentItemId = "4bx9fg32j9gv3wy3s2tdwyv1wp" })
+                    .WithSettings(new ContentPartFieldSettings() { Editor = "Tags", DisplayMode = "Tags"})
+                )
+                    
             );
 
             _contentDefinitionManager.AlterTypeDefinition("F1Post", type => type
@@ -47,7 +56,7 @@ namespace FunmulaUno.Post.Migrations
                 .WithPart(nameof(F1PostPart))
             );
 
-            return 2;
+            return 3;
         }
 
         public int UpdateFrom1()
@@ -60,6 +69,21 @@ namespace FunmulaUno.Post.Migrations
             );
 
             return 2;
+        }
+
+        public int UpdateForm2()
+        {
+            _contentDefinitionManager.AlterPartDefinition(nameof(F1PostPart), part => part
+                .WithField(nameof(F1PostPart.Category), field => field
+                    .OfType(nameof(TaxonomyField))
+                    .WithDisplayName("Category")
+                    .WithSettings(new TaxonomyFieldSettings() { TaxonomyContentItemId = "4bx9fg32j9gv3wy3s2tdwyv1wp" })
+                    .WithSettings(new ContentPartFieldSettings() { Editor = "Tags", DisplayMode = "Tags" })
+                )
+
+            );
+
+            return 3;
         }
     }
 }
